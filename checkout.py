@@ -37,6 +37,9 @@ def redondear(monto):
 
 
 def validar_item(item):
+    if item["producto"] not in CATALOGO:
+        raise CheckoutError("PRODUCTO_INEXISTENTE", f"Producto inexistente: {item['producto']}")
+
     item["talle"] = item["talle"].upper()
 
     if item["talle"] not in TALLES:
@@ -50,11 +53,7 @@ def calcular_subtotal(carrito):
     subtotal = Decimal("0.00")
     for item in carrito:
         validar_item(item)
-        try:
-            precio = CATALOGO[item["producto"]]
-        except:
-            continue
-        subtotal += precio * item["cantidad"]
+        subtotal += CATALOGO[item["producto"]] * item["cantidad"]
 
     return redondear(subtotal)
 

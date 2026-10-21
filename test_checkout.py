@@ -1,3 +1,4 @@
+import copy
 from datetime import date
 from decimal import Decimal
 
@@ -88,3 +89,39 @@ def test_un_talle_con_espacios_alrededor_es_valido():
 
     # Assert
     assert subtotal == Decimal("24999.90")
+
+
+def test_validar_item_no_modifica_el_item_que_recibe():
+    # Arrange
+    un_item = item("buzo", "m", 1)
+    copia = copy.deepcopy(un_item)
+
+    # Act
+    validar_item(un_item)
+
+    # Assert
+    assert un_item == copia
+
+
+def test_calcular_total_no_modifica_el_carrito_que_recibe():
+    # Arrange
+    carrito = [item("buzo", "m", 1), item("remera", "s", 2)]
+    copia = copy.deepcopy(carrito)
+
+    # Act
+    calcular_total(carrito, "CABA", None, HOY_VIGENTE)
+
+    # Assert
+    assert carrito == copia
+
+
+@pytest.mark.parametrize("talle", [None, 42])
+def test_un_talle_que_no_es_texto_lanza_talle_invalido(talle):
+    # Arrange
+    un_item = item("buzo", talle, 1)
+
+    # Act
+    codigo = codigo_de_error(validar_item, un_item)
+
+    # Assert
+    assert codigo == "TALLE_INVALIDO"

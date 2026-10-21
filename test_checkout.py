@@ -77,3 +77,14 @@ def test_un_producto_inexistente_en_el_carrito_lanza_producto_inexistente():
 
     # Assert
     assert codigo == "PRODUCTO_INEXISTENTE"
+
+
+def test_un_talle_con_espacios_alrededor_es_valido():
+    # Arrange
+    carrito = [item("buzo", "  M ", 1)]
+
+    # Act
+    subtotal = calcular_subtotal(carrito)
+
+    # Assert
+    assert subtotal == Decimal("24999.90")

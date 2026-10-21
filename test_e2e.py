@@ -3,7 +3,7 @@ import threading
 import urllib.error
 import urllib.request
 
-import pytest
+import pytest #type: ignore
 
 import api
 

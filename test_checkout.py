@@ -55,3 +55,14 @@ def test_el_descuento_porcentual_redondea_el_medio_centavo_hacia_arriba():
 
     # Assert
     assert descuento == Decimal("1799.93")
+
+
+def test_el_precio_sale_del_catalogo_aunque_el_item_traiga_uno_propio():
+    # Arrange
+    carrito = [item("buzo", "M", 1, precio=1)]
+
+    # Act
+    subtotal = calcular_subtotal(carrito)
+
+    # Assert
+    assert subtotal == Decimal("24999.90")

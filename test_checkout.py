@@ -44,3 +44,14 @@ def test_dos_buzos_a_caba_sin_cupon_dan_el_ejemplo_de_la_spec_en_decimal():
         "total": Decimal("52499.80"),
     }
     assert all(type(monto) is Decimal for monto in resultado.values())
+
+
+def test_el_descuento_porcentual_redondea_el_medio_centavo_hacia_arriba():
+    # Arrange
+    subtotal = Decimal("11999.50")
+
+    # Act
+    descuento = calcular_descuento(subtotal, 1, "EGRESADOS2026", HOY_VIGENTE)
+
+    # Assert
+    assert descuento == Decimal("1799.93")
